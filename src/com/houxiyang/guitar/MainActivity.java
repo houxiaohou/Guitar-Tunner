@@ -53,7 +53,6 @@ public class MainActivity extends Activity {
 
 		OnClickListener clicker = new OnClickListener() {
 
-			@Override
 			public void onClick(View v) {
 				onRecord(mStartRecording);
 				if (mStartRecording) {
