@@ -1,5 +1,7 @@
 package com.houxiyang.guitar.Utils;
 
+import android.util.Log;
+
 /*************************************************************************
  * Compilation: javac FFT.java Execution: java FFT N Dependencies: Complex.java
  * 
@@ -20,7 +22,7 @@ public class FFT {
 	// compute the FFT of x[], assuming its length is a power of 2
 	public static Complex[] fft(Complex[] x) {
 		int N = x.length;
-
+		Log.e("N",String.valueOf(N));
 		// base case
 		if (N == 1)
 			return new Complex[] { x[0] };

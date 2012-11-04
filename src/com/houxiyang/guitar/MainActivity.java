@@ -1,5 +1,8 @@
 package com.houxiyang.guitar;
 
+import com.houxiyang.guitar.Utils.Complex;
+import com.houxiyang.guitar.Utils.FFT;
+
 import android.app.Activity;
 import android.content.Context;
 import android.media.AudioFormat;
@@ -30,15 +33,25 @@ public class MainActivity extends Activity {
 
 	@SuppressWarnings("deprecation")
 	private void startRecording() {
-		int minSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_CONFIGURATION_MONO, AudioFormat.ENCODING_PCM_16BIT);
+		int minSize = AudioRecord.getMinBufferSize(sampleRate,
+				AudioFormat.CHANNEL_CONFIGURATION_MONO,
+				AudioFormat.ENCODING_PCM_16BIT);
 		aRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate,
 				AudioFormat.CHANNEL_CONFIGURATION_MONO,
 				AudioFormat.ENCODING_PCM_16BIT, minSize);
 		byte[] buffer = new byte[minSize];
 		aRecord.startRecording();
-		int bufferReadResult = aRecord.read(buffer, 0, minSize);
-		byte[] tmpBuff = new byte[bufferReadResult];
-		Log.e("x", tmpBuff.toString());
+		aRecord.read(buffer, 0, minSize);
+
+		Complex[] fftTempArray = new Complex[minSize];
+		for (int i = 0; i < minSize; i++) {
+			fftTempArray[i] = new Complex(buffer[i], 0);
+		}
+		Complex[] fftArray = FFT.fft(fftTempArray);
+		for (Complex c : fftArray) {
+			double frequency = c.abs();
+			Log.e("Frequency", String.valueOf(frequency));
+		}
 	}
 
 	private void stopRecording() {
@@ -78,13 +91,11 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		LinearLayout ll = new LinearLayout(this);
-        mRecordButton = new RecordButton(this);
-        ll.addView(mRecordButton,
-            new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                0));
-        setContentView(ll);
+		mRecordButton = new RecordButton(this);
+		ll.addView(mRecordButton, new LinearLayout.LayoutParams(
+				ViewGroup.LayoutParams.WRAP_CONTENT,
+				ViewGroup.LayoutParams.WRAP_CONTENT, 0));
+		setContentView(ll);
 
 	}
 
@@ -93,5 +104,5 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
-	
+
 }
