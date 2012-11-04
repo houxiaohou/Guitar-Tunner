@@ -56,9 +56,9 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				onRecord(mStartRecording);
 				if (mStartRecording) {
-					setText("Í£Ö¹Â¼Òô");
+					setText("åœæ­¢å½•éŸ³");
 				} else {
-					setText("¿ªÊ¼Â¼Òô");
+					setText("å¼€å§‹å½•éŸ³");
 				}
 				mStartRecording = !mStartRecording;
 			}
@@ -67,7 +67,7 @@ public class MainActivity extends Activity {
 
 		public RecordButton(Context ctx) {
 			super(ctx);
-			setText("¿ªÊ¼Â¼Òô");
+			setText("å¼€å§‹å½•éŸ³");
 			setOnClickListener(clicker);
 		}
 
