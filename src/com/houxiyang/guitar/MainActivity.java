@@ -1,8 +1,5 @@
 package com.houxiyang.guitar;
 
-import com.houxiyang.guitar.Utils.Complex;
-import com.houxiyang.guitar.Utils.FFT;
-
 import android.app.Activity;
 import android.content.Context;
 import android.media.AudioFormat;
@@ -16,6 +13,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+
+import com.houxiyang.guitar.Utils.FFTbase;
 
 public class MainActivity extends Activity {
 
@@ -33,25 +32,49 @@ public class MainActivity extends Activity {
 
 	@SuppressWarnings("deprecation")
 	private void startRecording() {
-		int minSize = AudioRecord.getMinBufferSize(sampleRate,
-				AudioFormat.CHANNEL_CONFIGURATION_MONO,
-				AudioFormat.ENCODING_PCM_16BIT);
+		
+		int minSize = 256;
+		
+		int bufferSize = AudioRecord.getMinBufferSize(sampleRate,
+	             AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
 		aRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate,
 				AudioFormat.CHANNEL_CONFIGURATION_MONO,
-				AudioFormat.ENCODING_PCM_16BIT, minSize);
-		byte[] buffer = new byte[minSize];
+				AudioFormat.ENCODING_PCM_16BIT, bufferSize);
+		short[] buffer = new short[minSize];
 		aRecord.startRecording();
-		aRecord.read(buffer, 0, minSize);
+		int bufferReadResult = aRecord.read(buffer, 0, minSize);
 
-		Complex[] fftTempArray = new Complex[minSize];
-		for (int i = 0; i < minSize; i++) {
-			fftTempArray[i] = new Complex(buffer[i], 0);
+		double[] re = new double[minSize];
+		double[] im = new double[minSize];
+
+		double[] newArray = new double[minSize * 2];
+		double[] magns = new double[minSize];
+
+		double MaxMagn = 0;
+		double pitch = 0;
+
+		for (int i = 0; i < minSize && i < bufferReadResult; i++) {
+			re[i] = (double) buffer[i] / 32768.0;
+			im[i] = 0;
 		}
-		Complex[] fftArray = FFT.fft(fftTempArray);
-		for (Complex c : fftArray) {
-			double frequency = c.abs();
-			Log.e("Frequency", String.valueOf(frequency));
+
+		newArray = FFTbase.fft(re, im, true);
+
+		for (int i = 0; i < newArray.length; i += 2) {
+			re[i / 2] = newArray[i];
+			im[i / 2] = newArray[i + 1];
+			magns[i / 2] = Math.sqrt(re[i / 2] * re[i / 2] + im[i / 2]
+					* im[i / 2]);
 		}
+
+		for (int i = 0; i < (magns.length) / 2; i++) {
+			if (magns[i] > MaxMagn) {
+				MaxMagn = magns[i];
+				pitch = i;
+			}
+			Log.i("pitch and magnitude", "" + MaxMagn + "   " + pitch*15.625f);
+		}
+
 	}
 
 	private void stopRecording() {
