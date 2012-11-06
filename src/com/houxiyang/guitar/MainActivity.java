@@ -3,8 +3,6 @@ package com.houxiyang.guitar;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import com.houxiyang.guitar.Utils.TunnerThread;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -15,6 +13,9 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.houxiyang.guitar.Utils.KeepScreenon;
+import com.houxiyang.guitar.Utils.TunnerThread;
 
 public class MainActivity extends Activity {
 
@@ -34,6 +35,7 @@ public class MainActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		KeepScreenon.keepScreenOn(this, true);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		LinearLayout ll = new LinearLayout(this);
 		frequencyShow = new TextView(this);
