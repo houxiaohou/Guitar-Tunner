@@ -35,6 +35,9 @@ public final class R {
         public static final int menu_settings=0x7f050001;
         public static final int start_tunning=0x7f050003;
         public static final int stop_tunning=0x7f050004;
+        public static final int string1=0x7f050005;
+        public static final int string2=0x7f050006;
+        public static final int string3=0x7f050007;
         public static final int title_activity_main=0x7f050002;
     }
     public static final class style {

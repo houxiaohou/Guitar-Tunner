@@ -75,6 +75,12 @@ public class MainActivity extends Activity {
 	}
 	
 	private void updateText(double currentFrequency) {
+		while (currentFrequency < 82.41) {
+			currentFrequency = currentFrequency * 2;
+		}
+		while (currentFrequency > 164.81) {
+			currentFrequency = currentFrequency * 0.5;
+		}
 		BigDecimal a = new BigDecimal(currentFrequency);
 		BigDecimal result = a.setScale(2, RoundingMode.DOWN);
 		frequencyView.setText(String.valueOf(result));

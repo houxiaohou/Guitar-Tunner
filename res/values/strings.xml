@@ -5,5 +5,8 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="start_tunning">开始调音</string>
     <string name="stop_tunning">停止调音</string>
+    <string name="string1">1弦</string>
+    <string name="string2">2弦</string>
+    <string name="string3">3弦</string>
 	
 </resources>
