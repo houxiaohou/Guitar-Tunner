@@ -2,14 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#050607" >
+    android:background="@color/tuner" >
+    <Button
+        android:id="@+id/tunning_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:typeface="sans"
+        android:text="@string/start_tunning" />
 
     <TextView
-        android:id="@+id/titleText"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:text="@string/app_name"
-        android:textSize="20dp"
-        android:textColor="#33B5E5" />
+        android:id="@+id/frequency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="134dp"
+        android:typeface="sans"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

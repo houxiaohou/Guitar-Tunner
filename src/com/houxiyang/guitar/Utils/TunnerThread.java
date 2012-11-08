@@ -7,8 +7,9 @@ import android.os.Handler;
 
 /**
  * 通过调用FFT方法来实时计算输入音频的频率
+ * 
  * @author Young
- *
+ * 
  */
 public class TunnerThread extends Thread {
 
@@ -66,7 +67,8 @@ public class TunnerThread extends Thread {
 			if (currentFrequency > 0) {
 				handler.post(callback);
 				try {
-					audioRecord.stop();
+					if (audioRecord.getState() ==  AudioRecord.STATE_INITIALIZED)
+						audioRecord.stop();
 					Thread.sleep(20);
 					audioRecord.startRecording();
 				} catch (InterruptedException e) {
@@ -75,10 +77,13 @@ public class TunnerThread extends Thread {
 			}
 		}
 	}
-	
+
 	public void close() {
-		audioRecord.stop();
-		audioRecord.release();
+		if (audioRecord != null
+				&& audioRecord.getState() == AudioRecord.STATE_INITIALIZED) {
+			audioRecord.stop();
+			audioRecord.release();
+		}
 	}
 
 	public double getCurrentFrequency() {

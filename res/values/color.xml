@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="main">#FFA80000</color>
+    <color name="tuner">#B8B8B8</color>
+    <color name="lesson">#383838</color>
+
+</resources>

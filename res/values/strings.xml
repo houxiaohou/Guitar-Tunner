@@ -3,5 +3,7 @@
     <string name="app_name">吉他调音大师</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="start_tunning">开始调音</string>
+    <string name="stop_tunning">停止调音</string>
 	
 </resources>
